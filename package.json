@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev": "tailwindcss -i ./assets/css/input.css -o ./public/styles.css --watch",
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./public/styles.css --minify"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  },
+  "name": "go-htmx",
+  "version": "1.0.0",
+  "description": "I'm trying to create a simple but effective go htmx template that I understand by putting together from the ground up. It may not be fully functional yet or maintained but I am setting this up for use in future HTMX go projects",
+  "main": "tailwind.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshuamURD/go-htmx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JoshuamURD/go-htmx/issues"
+  },
+  "homepage": "https://github.com/JoshuamURD/go-htmx#readme"
+}

@@ -1,0 +1,50 @@
+package views
+
+import (
+	"joshuamURD/wardens-court-summariser/views/layouts"
+	model "joshuamURD/wardens-court-summariser/models"
+)
+
+
+templ Index(wardensCourtDecisions []model.Decision) {
+    @layouts.BaseLayout("Wardens Court Summariser") {
+        <div class="container mx-auto px-4 py-8">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Wardens Court Summariser</h1>
+                <p class="text-lg text-gray-600">This is a tool that allows you to summarise the contents of a Warden's Court decision.</p>
+            </header>
+
+            <div class="overflow-x-auto bg-white rounded-lg shadow">
+                <table class="min-w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-50 border-b border-gray-200">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parties</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Citation</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Summary</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        for i := range wardensCourtDecisions {
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{ wardensCourtDecisions[i].DateDelivered.Format("02 Jan 2006") }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Parties }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].DecisionNumber }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Summary }</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <a href={ templ.SafeURL(wardensCourtDecisions[i].DocumentURL) }
+                                       target="_blank" 
+                                       rel="noopener noreferrer" 
+                                       class="text-blue-600 hover:text-blue-800 hover:underline">
+                                        View Decision
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

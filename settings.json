@@ -1,0 +1,15 @@
+{
+  "emmet.includeLanguages": {
+    "templ": "html",
+    "*.templ": "html"
+  },
+  "files.associations": {
+    "*.templ": "html"
+  },
+  "[templ]": {
+    "editor.defaultFormatter": "a-h.templ",
+    "editor.formatOnSave": true
+  },
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showExpandedAbbreviation": "always"
+}
