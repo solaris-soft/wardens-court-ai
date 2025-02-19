@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"joshuamURD/wardens-court-summariser/config"
 	"joshuamURD/wardens-court-summariser/internal/handlers"
-	"joshuamURD/wardens-court-summariser/scrape"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -16,7 +15,6 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		fmt.Printf("Error loading .env file: %v\n", err)
 	}
-	scrape.ScrapeDecisions()
 
 	r := []config.Route{
 		{Path: "/", Handler: handlers.MakeRoute(handlers.HandleIndex)},
