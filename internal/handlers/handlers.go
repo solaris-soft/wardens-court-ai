@@ -10,9 +10,6 @@ import (
 // HTTPHandler is a modified HandlerFunc to also provide a log error if error executing the route
 type HTTPHandler func(w http.ResponseWriter, r *http.Request) error
 
-type Controller interface {
-}
-
 // MakeRoute encapsulates error logging to the http.HandlerFunc function signature (adapter pattern)
 func MakeRoute(h HTTPHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
