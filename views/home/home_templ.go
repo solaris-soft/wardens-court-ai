@@ -46,7 +46,7 @@ func Index(wardensCourtDecisions []model.Decision) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"container mx-auto px-4 py-8\"><header class=\"mb-8\"><h1 class=\"text-3xl font-bold text-gray-900 mb-4\">Wardens Court Summariser</h1><p class=\"text-lg text-gray-600\">This is a tool that allows you to summarise the contents of a Warden's Court decision.</p></header><div x-data=\"{open: false}\" class=\"flex justify-center items-center flex-col my-10\"><button class=\"bg-black text-white p-2 mb-2\" @click=\"open = !open\">+ Add Wardens Court Decision</button> <span x-show=\"open\"><input type=\"file\" id=\"decision\" name=\"decision\" accept=\"pdf\"></span></div><div class=\"overflow-x-auto bg-white rounded-lg shadow\"><table class=\"min-w-full table-auto\"><thead><tr class=\"bg-gray-50 border-b border-gray-200\"><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Date</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Parties</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Citation</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Summary</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Link</th></tr></thead> <tbody class=\"bg-white divide-y divide-gray-200\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"container mx-auto px-4 py-8\"><header class=\"mb-8\"><h1 class=\"text-3xl font-bold text-gray-900 mb-4\">Wardens Court Summariser</h1><p class=\"text-lg text-gray-600\">This is a tool that allows you to summarise the contents of a Warden's Court decision.</p></header><div x-data=\"{open: false}\" class=\"flex justify-center items-center flex-col my-10\"><button class=\"bg-black text-white p-2 mb-2\" @click=\"open = !open\">+ Add Wardens Court Decision</button> <span x-show=\"open\"><form hx-post=\"/upload\" hx-target=\"decision-table\" hx-swap=\"beforeend\" hx-encoding=\"multipart/form-data\"><input type=\"file\" id=\"decision\" name=\"decision\" accept=\"pdf\"> <button type=\"submit\" class=\"bg-black text-white p-1 my-2\">Submit</button></form></span></div><div class=\"overflow-x-auto bg-white rounded-lg shadow\"><table class=\"min-w-full table-auto\"><thead><tr class=\"bg-gray-50 border-b border-gray-200\"><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Date</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Parties</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Citation</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Summary</th><th class=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Link</th></tr></thead> <tbody class=\"bg-white divide-y divide-gray-200\" id=\"decision-table\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -58,7 +58,7 @@ func Index(wardensCourtDecisions []model.Decision) templ.Component {
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(wardensCourtDecisions[i].DateDelivered.Format("02 Jan 2006"))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 37, Col: 156}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 40, Col: 156}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
@@ -71,7 +71,7 @@ func Index(wardensCourtDecisions []model.Decision) templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(wardensCourtDecisions[i].Parties)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 38, Col: 110}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 41, Col: 110}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -84,7 +84,7 @@ func Index(wardensCourtDecisions []model.Decision) templ.Component {
 				var templ_7745c5c3_Var5 string
 				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(wardensCourtDecisions[i].DecisionNumber)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 39, Col: 117}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 42, Col: 117}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 				if templ_7745c5c3_Err != nil {
@@ -97,7 +97,7 @@ func Index(wardensCourtDecisions []model.Decision) templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(wardensCourtDecisions[i].Summary)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 40, Col: 110}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/home/home.templ`, Line: 43, Col: 110}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
