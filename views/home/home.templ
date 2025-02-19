@@ -15,6 +15,12 @@ templ Index(wardensCourtDecisions []model.Decision) {
             </header>
 
             <div class="overflow-x-auto bg-white rounded-lg shadow">
+                <div x-data="{open: false}">                     
+                    <button class="my-10 bg-black font-white p-2" @click="open = true">+ Add Wardens Court Decision</button>
+                    <span x-show="open">
+                        <input type="file" id="decision" name="decision" accept="pdf">
+                    </span>
+                </div>
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-200">
