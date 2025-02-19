@@ -14,13 +14,13 @@ templ Index(wardensCourtDecisions []model.Decision) {
                 <p class="text-lg text-gray-600">This is a tool that allows you to summarise the contents of a Warden's Court decision.</p>
             </header>
 
-            <div class="overflow-x-auto bg-white rounded-lg shadow">
-                <div x-data="{open: false}">                     
-                    <button class="my-10 bg-black font-white p-2" @click="open = true">+ Add Wardens Court Decision</button>
+                <div x-data="{open: false}" class="flex justify-center items-center flex-col my-10">                     
+                    <button class="bg-black text-white p-2 mb-2" @click="open = !open">+ Add Wardens Court Decision</button>
                     <span x-show="open">
                         <input type="file" id="decision" name="decision" accept="pdf">
                     </span>
                 </div>
+            <div class="overflow-x-auto bg-white rounded-lg shadow">
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-200">
