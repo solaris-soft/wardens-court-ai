@@ -3,18 +3,11 @@ package database
 import (
 	"database/sql"
 	model "joshuamURD/wardens-court-summariser/models"
+	"os"
 
 	"github.com/google/uuid"
 	_ "modernc.org/sqlite"
 )
-
-type DB interface {
-	GetDecision(citation string) (*model.Decision, error)
-	GetAllDecisions() ([]*model.Decision, error)
-	CreateDecision(*model.Decision) error
-	UpdateDecision(*model.Decision) error
-	DeleteDecision(uuid.UUID) error
-}
 
 type SQLITEDB struct {
 	db *sql.DB
@@ -26,6 +19,10 @@ func NewSQLITEDB(path string) (*SQLITEDB, error) {
 		return nil, err
 	}
 	return &SQLITEDB{db: db}, nil
+}
+
+func (db *SQLITEDB) UploadFile(file *os.File) error {
+	return nil
 }
 
 func (db *SQLITEDB) GetDecision(citation string) (*model.Decision, error) {

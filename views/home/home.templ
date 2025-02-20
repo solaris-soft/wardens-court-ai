@@ -17,7 +17,7 @@ templ Index(wardensCourtDecisions []model.Decision) {
                 <div x-data="{open: false}" class="flex justify-center items-center flex-col my-10">                     
                     <button class="bg-black text-white p-2 mb-2" @click="open = !open">+ Add Wardens Court Decision</button>
                     <span x-show="open">
-                        <form hx-post="/upload" hx-target="decision-table" hx-swap="beforeend" hx-encoding="multipart/form-data">
+                        <form hx-post="/upload" hx-target="#decision-table" hx-swap="beforeend" hx-encoding="multipart/form-data" hx-on:submit="console.log('Submitted')">
                         <input type="file" id="decision" name="decision" accept="pdf">
                         <button type="submit" class="bg-black text-white p-1 my-2">Submit</button>
                         </form> 
@@ -30,6 +30,8 @@ templ Index(wardensCourtDecisions []model.Decision) {
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parties</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Citation</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tenements</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Warden</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Summary</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Link</th>
                         </tr>
@@ -38,8 +40,14 @@ templ Index(wardensCourtDecisions []model.Decision) {
                         for i := range wardensCourtDecisions {
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{ wardensCourtDecisions[i].DateDelivered.Format("02 Jan 2006") }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Parties }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].DecisionNumber }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Parties[0].Name } v { wardensCourtDecisions[i].Parties[1].Name }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Citation }</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">
+                                for _, tenement := range wardensCourtDecisions[i].Tenements {
+                                    <span class="px-2 py-1 bg-gray-100 rounded-md">{ tenement }</span>
+                                }
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Warden }</td>
                                 <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Summary }</td>
                                 <td class="px-6 py-4 text-sm">
                                     <a href={ templ.SafeURL(wardensCourtDecisions[i].DocumentURL) }

@@ -1,7 +1,9 @@
 package config
 
 import (
+	"log"
 	"net/http"
+	"strconv"
 )
 
 type Route struct {
@@ -26,13 +28,23 @@ func WithAddr(addr string) Option {
 
 func WithPort(port string) Option {
 	return func(o *options) {
-		o.port = port
+		portInt, err := strconv.Atoi(port)
+		if err != nil {
+			o.port = "8080"
+		} else if portInt < 0 || portInt > 65535 {
+			o.port = "8080"
+		} else {
+			o.port = port
+		}
 	}
 }
 
-func WithRoutes(routes []Route) Option {
+func WithRoutes(routes *[]Route) Option {
 	return func(o *options) {
-		o.routes = routes
+		if routes == nil {
+			log.Fatal("routes is nil")
+		}
+		o.routes = *routes
 	}
 }
 

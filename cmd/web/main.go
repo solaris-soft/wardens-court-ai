@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"joshuamURD/wardens-court-summariser/config"
+	"joshuamURD/wardens-court-summariser/internal/database"
 	"joshuamURD/wardens-court-summariser/internal/handlers"
 	"os"
 
@@ -16,13 +17,19 @@ func main() {
 		fmt.Printf("Error loading .env file: %v\n", err)
 	}
 
+	db, err := database.NewSQLITEDB("wardens-court-summariser.db")
+	if err != nil {
+		fmt.Printf("Error creating database: %v\n", err)
+	}
+
 	r := []config.Route{
 		{Path: "/", Handler: handlers.MakeRoute(handlers.HandleIndex)},
+		{Path: "/upload", Handler: handlers.MakeRoute(handlers.UploadFile(db))},
 	}
 
 	address := config.WithAddr(os.Getenv("ADDRESS"))
 	port := config.WithPort(os.Getenv("PORT"))
-	routes := config.WithRoutes(r)
+	routes := config.WithRoutes(&r)
 	cfg := config.NewAppConfig(address, port, routes)
 
 	fmt.Printf("Listening on %s\n", cfg.Addr)
