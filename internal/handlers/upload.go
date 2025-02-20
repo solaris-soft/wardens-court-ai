@@ -17,15 +17,11 @@ func UploadFile(ds dataStore) HTTPHandler {
 	return func(w http.ResponseWriter, r *http.Request) error {
 		fmt.Println("Uploading file")
 		r.ParseMultipartForm(32 << 20)
-		file, _, err := r.FormFile("file")
+		file, _, err := r.FormFile("decision")
 		if err != nil {
 			return fmt.Errorf("failed to get file: %w", err)
 		}
 		defer file.Close()
-
-		if err := ds.UploadFile(file.(*os.File)); err != nil {
-			return fmt.Errorf("failed to upload file: %w", err)
-		}
 
 		decision := model.Decision{
 			Citation:      "[2024] WAMW 1",
