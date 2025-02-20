@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	model "joshuamURD/wardens-court-summariser/models"
+	model "joshuamURD/wardens-court-summariser/internal/models"
 )
 
 func TableRow(decision model.Decision) templ.Component {

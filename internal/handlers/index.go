@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	model "joshuamURD/wardens-court-summariser/models"
+	model "joshuamURD/wardens-court-summariser/internal/models"
 	views "joshuamURD/wardens-court-summariser/views/home"
 	"net/http"
 )

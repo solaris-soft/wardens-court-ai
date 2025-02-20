@@ -3,8 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	model "joshuamURD/wardens-court-summariser/models"
-	"os"
+	model "joshuamURD/wardens-court-summariser/internal/models"
 
 	"github.com/google/uuid"
 	_ "modernc.org/sqlite"
@@ -35,7 +34,7 @@ func NewSQLITEDB(path string) (*SQLITEDB, error) {
 	return sqliteDB, nil
 }
 
-func (db *SQLITEDB) UploadFile(file *os.File) error {
+func (db *SQLITEDB) UploadFile(bytes []byte) error {
 	return nil
 }
 

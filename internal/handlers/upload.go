@@ -2,15 +2,15 @@ package handlers
 
 import (
 	"fmt"
-	model "joshuamURD/wardens-court-summariser/models"
-	"joshuamURD/wardens-court-summariser/views/partials"
+	"io"
+	model "joshuamURD/wardens-court-summariser/internal/models"
+	partials "joshuamURD/wardens-court-summariser/views/partials"
 	"net/http"
-	"os"
 	"time"
 )
 
 type dataStore interface {
-	UploadFile(file *os.File) error
+	UploadFile(bytes []byte) error
 }
 
 func UploadFile(ds dataStore) HTTPHandler {
@@ -22,6 +22,15 @@ func UploadFile(ds dataStore) HTTPHandler {
 			return fmt.Errorf("failed to get file: %w", err)
 		}
 		defer file.Close()
+
+		bytes, err := io.ReadAll(file)
+		if err != nil {
+			return fmt.Errorf("failed to read file: %w", err)
+		}
+
+		if err := ds.UploadFile(bytes); err != nil {
+			return fmt.Errorf("failed to upload file: %w", err)
+		}
 
 		decision := model.Decision{
 			Citation:      "[2024] WAMW 1",
