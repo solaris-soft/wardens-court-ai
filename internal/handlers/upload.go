@@ -2,33 +2,40 @@ package handlers
 
 import (
 	"fmt"
-	"io"
-	model "joshuamURD/wardens-court-summariser/internal/models"
-	views "joshuamURD/wardens-court-summariser/views/home"
-	"joshuamURD/wardens-court-summariser/views/partials"
+	pdfReader "joshuamURD/wardens-court-summariser/internal/pdf"
 	"net/http"
 )
-
-type dataStore interface {
-	uploadFile(bytes []byte) error
-	getDecisions() ([]model.Decision, error)
-}
 
 func UploadFile(ds dataStore) HTTPHandler {
 	return func(w http.ResponseWriter, r *http.Request) error {
 		fmt.Println("Uploading file")
-		r.ParseMultipartForm(32 << 20)
+
+		// Parse the multipart form
+		if err := r.ParseMultipartForm(32 << 20); err != nil {
+			return fmt.Errorf("failed to parse form: %w", err)
+		}
+
+		// Get the file from the form
 		file, _, err := r.FormFile("decision")
 		if err != nil {
-			return Render(w, r, views.UploadStatus("error"))
+			return fmt.Errorf("failed to get file: %w", err)
 		}
 		defer file.Close()
 
-		bytes, err := io.ReadAll(file)
+		// Extract text from the PDF
+		text, err := pdfReader.ExtractTextFromReader(file, 1, 1)
 		if err != nil {
-			return Render(w, r, views.UploadStatus("error"))
+			return fmt.Errorf("failed to extract text from PDF: %w", err)
 		}
-		// Return initial processing status
-		return Render(w, r, partials.Table([]model.Decision{}))
+
+		// Reset the file for upload to database
+		if _, err := file.Seek(0, 0); err != nil {
+			return fmt.Errorf("failed to reset file: %w", err)
+		}
+
+		fmt.Println(text)
+
+		// Return the table with decisions
+		return nil
 	}
 }

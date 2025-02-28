@@ -7,10 +7,6 @@ import (
 	"net/http"
 )
 
-type dataStore interface {
-	AllDecisions() ([]model.Decision, error)
-}
-
 func HandleIndex(w http.ResponseWriter, r *http.Request) error {
 	return Render(w, r, views.Index([]model.Decision{}))
 }

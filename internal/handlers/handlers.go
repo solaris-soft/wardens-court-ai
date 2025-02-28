@@ -1,11 +1,19 @@
 package handlers
 
 import (
+	"io"
+	model "joshuamURD/wardens-court-summariser/internal/models"
 	"log/slog"
 	"net/http"
 
 	"github.com/a-h/templ"
 )
+
+type dataStore interface {
+	AllDecisions() ([]*model.Decision, error)
+	UploadFile(citation string, filename string, file io.Reader) (string, error)
+	GetDecision(citation string) (*model.Decision, error)
+}
 
 // HTTPHandler is a modified HandlerFunc to also provide a log error if error executing the route
 type HTTPHandler func(w http.ResponseWriter, r *http.Request) error

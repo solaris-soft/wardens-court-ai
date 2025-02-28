@@ -17,7 +17,7 @@ func main() {
 		fmt.Printf("Error loading .env file: %v\n", err)
 	}
 
-	db, err := database.NewSQLITEDB("wardens-court-summariser.db")
+	db, err := database.NewSQLITEDB("wardens-court-summariser.db", "uploads")
 	if err != nil {
 		fmt.Printf("Error creating database: %v\n", err)
 	}
