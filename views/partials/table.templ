@@ -7,7 +7,13 @@ import (
 
 templ Table(decisions []*model.Decision) {
 
-    for _, decision := range decisions {
-        @views.DecisionRow(*decision)
-    }
+	if len(decisions) == 0 {
+		<div class="flex justify-center items-center h-screen">
+			<div class="text-2xl font-bold">No decisions found</div>
+		</div>
+	}
+
+	for _, decision := range decisions {
+		@views.DecisionRow(*decision)
+	}
 }

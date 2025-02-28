@@ -34,6 +34,12 @@ func Table(decisions []*model.Decision) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		if len(decisions) == 0 {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex justify-center items-center h-screen\"><div class=\"text-2xl font-bold\">No decisions found</div></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
 		for _, decision := range decisions {
 			templ_7745c5c3_Err = views.DecisionRow(*decision).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {

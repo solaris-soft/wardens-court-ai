@@ -25,6 +25,7 @@ func main() {
 	r := []config.Route{
 		{Path: "/", Handler: handlers.MakeRoute(handlers.HandleIndex)},
 		{Path: "/upload", Handler: handlers.MakeRoute(handlers.UploadFile(db))},
+		{Path: "/table", Handler: handlers.MakeRoute(handlers.HandleTable(db))},
 	}
 
 	address := config.WithAddr(os.Getenv("ADDRESS"))

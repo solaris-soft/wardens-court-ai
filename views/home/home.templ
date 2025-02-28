@@ -18,8 +18,8 @@ templ Index(wardensCourtDecisions []model.Decision) {
                     <span x-show="open">
                         <form 
                             hx-post="/upload"
-                            hx-target="#upload-status"
-                            hx-swap="outerHTML"
+                            hx-target="#decision-table"
+                            hx-swap="beforeend"
                             hx-encoding="multipart/form-data"
                             hx-indicator="#loading"
                         >
@@ -31,10 +31,9 @@ templ Index(wardensCourtDecisions []model.Decision) {
                                 Uploading...
                             </div>
                         </form>
-                        <div id="upload-status"></div>
                     </span>
                 </div>
-            <div class="overflow-x-auto bg-white rounded-lg shadow" hx-get="/table" hx-trigger="every 5s" hx-target="#decision-table" hx-swap="beforeend">
+            <div class="overflow-x-auto bg-white rounded-lg shadow" hx-get="/table" hx-trigger="every 5s" hx-target="#decision-table" hx-swap="innerHTML">
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-200">
@@ -48,8 +47,14 @@ templ Index(wardensCourtDecisions []model.Decision) {
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200" id="decision-table">
-                        for i := range wardensCourtDecisions {
-                            @DecisionRow(wardensCourtDecisions[i])
+                        if len(wardensCourtDecisions) == 0 {
+                            <tr>
+                                <td colspan="8" class="text-center py-4">No decisions found</td>
+                            </tr>
+                        } else {
+                            for i := range wardensCourtDecisions {
+                                @DecisionRow(wardensCourtDecisions[i])
+                            }
                         }
                     </tbody>
                 </table>
