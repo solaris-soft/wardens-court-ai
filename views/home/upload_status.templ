@@ -1,0 +1,19 @@
+package views
+
+templ UploadStatus(status string) {
+    <div 
+        id="upload-status"
+    >
+        <p class="text-sm">
+            if status == "processing" {
+                <span>Processing your document...</span>
+            } else if status == "complete" {
+                <span>Upload complete! The table will update shortly.</span>
+            } else if status == "error" {
+                <span>An error occurred while processing your document.</span>
+            } else {
+                <span>Unknown status</span>
+            }
+        </p>
+    </div>
+} 

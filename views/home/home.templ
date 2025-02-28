@@ -16,13 +16,25 @@ templ Index(wardensCourtDecisions []model.Decision) {
                 <div x-data="{open: false}" class="flex justify-center items-center flex-col my-10">                     
                     <button class="bg-black text-white p-2 mb-2" @click="open = !open">+ Add Wardens Court Decision</button>
                     <span x-show="open">
-                        <form hx-post="/upload" hx-target="#decision-table" hx-swap="beforeend" hx-encoding="multipart/form-data" hx-on:submit="console.log('Submitted')">
-                        <input type="file" id="decision" name="decision" accept="pdf">
-                        <button type="submit" class="bg-black text-white p-1 my-2">Submit</button>
-                        </form> 
+                        <form 
+                            hx-post="/upload"
+                            hx-target="#upload-status"
+                            hx-swap="outerHTML"
+                            hx-encoding="multipart/form-data"
+                            hx-indicator="#loading"
+                        >
+                            <input type="file" id="decision" name="decision" accept="pdf">
+                            <button type="submit" class="bg-black text-white p-1 my-2">
+                                Submit
+                            </button>
+                            <div id="loading" class="htmx-indicator">
+                                Uploading...
+                            </div>
+                        </form>
+                        <div id="upload-status"></div>
                     </span>
                 </div>
-            <div class="overflow-x-auto bg-white rounded-lg shadow">
+            <div class="overflow-x-auto bg-white rounded-lg shadow" hx-get="/table" hx-trigger="every 5s" hx-target="#decision-table" hx-swap="beforeend">
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr class="bg-gray-50 border-b border-gray-200">
@@ -37,26 +49,7 @@ templ Index(wardensCourtDecisions []model.Decision) {
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200" id="decision-table">
                         for i := range wardensCourtDecisions {
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{ wardensCourtDecisions[i].DateDelivered.Format("02 Jan 2006") }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Parties[0].Name } v { wardensCourtDecisions[i].Parties[1].Name }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Citation }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">
-                                for _, tenement := range wardensCourtDecisions[i].Tenements {
-                                    <span class="px-2 py-1 bg-gray-100 rounded-md">{ tenement }</span>
-                                }
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Warden }</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">{ wardensCourtDecisions[i].Summary }</td>
-                                <td class="px-6 py-4 text-sm">
-                                    <a href={ templ.SafeURL(wardensCourtDecisions[i].DocumentURL) }
-                                       target="_blank" 
-                                       rel="noopener noreferrer" 
-                                       class="text-blue-600 hover:text-blue-800 hover:underline">
-                                        View Decision
-                                    </a>
-                                </td>
-                            </tr>
+                            @DecisionRow(wardensCourtDecisions[i])
                         }
                     </tbody>
                 </table>

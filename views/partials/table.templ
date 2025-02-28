@@ -1,0 +1,13 @@
+package partials
+
+import (
+	model "joshuamURD/wardens-court-summariser/internal/models"
+	"joshuamURD/wardens-court-summariser/views/home"
+)
+
+templ Table(decisions []model.Decision) {
+
+    for _, decision := range decisions {
+        @views.DecisionRow(decision)
+    }
+}
